@@ -9,14 +9,15 @@ metadata:
     # nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/use-regex: "true"
     # nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/server-alias: "dev.nextbillion.co"
+    nginx.ingress.kubernetes.io/server-alias: "test.gaurangacharya.co"
 spec:
   tls:
   - hosts:
-    - dev.nextbillion.co # demo-aks-ingress.eastus.cloudapp.azure.com
+   # - dev.nextbillion.co # demo-aks-ingress.eastus.cloudapp.azure.com
+     - test.gaurangacharya.co
     secretName: tls-secret
   rules:
-  - host: dev.nextbillion.co # demo-aks-ingress.eastus.cloudapp.azure.com
+  - host: test.gaurangacharya.co #dev.nextbillion.co # demo-aks-ingress.eastus.cloudapp.azure.com
     http:
       paths:
       - backend:
