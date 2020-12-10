@@ -1,34 +1,8 @@
-# apiVersion: networking.k8s.io/v1beta1
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: aks-frontend-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    # nginx.ingress.kubernetes.io/rewrite-target: /$1
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    # nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/server-alias: "test.gaurangacharya.co"
-spec:
-  tls:
-  - hosts:
-   # - dev.nextbillion.co # demo-aks-ingress.eastus.cloudapp.azure.com
-     - test.gaurangacharya.co
-    secretName: tls-secret
-  rules:
-  - host: test.gaurangacharya.co #dev.nextbillion.co # demo-aks-ingress.eastus.cloudapp.azure.com
-    http:
-      paths:
-      - backend:
-          serviceName: aks-frontend
-          servicePort: 80
-        path: /(.*)
-      - backend:
-          serviceName: user-mgmt-api-svc
-          servicePort: 3501
-        path: /user-management(/|$)(.*)
-      - backend:
-          serviceName: nextbillion-survey-api-svc
-          servicePort: 7059
-        path: /survey-api(/|$)(.*)
+# Use Helm to deploy an NGINX ingress controller
+helm install nginx-ingress stable/nginx-ingress \
+--namespace backend \
+--set controller.replicaCount=2 \
+--set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
+--set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
+--set controller.service.loadBalancerIP="40.84.136.187" \
+--set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="new1 "
