@@ -1,11 +1,7 @@
-- task: ContainerBuild@0
-  inputs:
-    repository: '123'
-    Dockerfile: 'Dockerfile'
-     install nginx-ingress stable/nginx-ingress \
+install nginx-ingress stable/nginx-ingress \
 --namespace backend \
 --set controller.replicaCount=2 \
 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
 --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
---set controller.service.loadBalancerIP="40.84.136.187 " \
---set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="EnterName"
+--set controller.service.loadBalancerIP="40.84.136.187" \
+--set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="new1 "
