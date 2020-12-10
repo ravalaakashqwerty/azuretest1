@@ -1,4 +1,4 @@
-- task: HelmDeploy@0
+- task: HelmDeploy@1
   displayName: Upgrade/install nginx-ingress
   inputs:
     azureSubscriptionEndpoint: 'myServiceConnection'
