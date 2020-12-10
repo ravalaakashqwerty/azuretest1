@@ -1,3 +1,4 @@
+---
 # Use Helm to deploy an NGINX ingress controller
 helm install nginx-ingress stable/nginx-ingress \
 --namespace backend \
