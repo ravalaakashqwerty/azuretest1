@@ -6,4 +6,4 @@
         chartType: 'Name'
         chartName: 'stable/nginx-ingress'
         releaseName: 'nginx'
-        overrideValues: 'controller.service.loadBalancerIP=$(test-ip),controller.publishService.enabled=true,controller.metrics.enabled=true'
+        overrideValues: 'controller.service.loadBalancerIP=$(test-ip),controller.publishService.enabled=true,controller.metrics.enabled=true' 
