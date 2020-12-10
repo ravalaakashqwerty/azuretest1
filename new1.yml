@@ -1,3 +1,4 @@
+---
 - task: HelmDeploy@1
   displayName: Upgrade/install nginx-ingress
   inputs:
