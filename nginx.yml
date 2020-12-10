@@ -1,16 +1,17 @@
-install nginx-ingress stable/nginx-ingress \
---namespace backend \
---set controller.replicaCount=2 \
---set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
---set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
---set controller.service.loadBalancerIP="40.84.136.187" \
---set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="new1 "
-- task: AzureRmWebAppDeployment@4
+- task: HelmDeploy@0
+      inputs:
+        connectionType: 'None'
+        namespace: 'kube-system'
+        command: 'upgrade'
+        chartType: 'Name'
+        chartName: 'stable/nginx-ingress'
+        releaseName: 'nginx'
+        overrideValues: 'controller.service.loadBalancerIP=$(test-ip),controller.publishService.enabled=true,controller.metrics.enabled=true'
+- task: KubernetesManifest@0
   inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'second123 - Azure'
-    appType: 'webAppLinux'
-    WebAppName: '123'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'STATICSITE|1.0'
-    StartupCommand: 'npm install'
+    action: 'deploy'
+    kubernetesServiceConnection: '12-second123-default-1607407912930'
+    namespace: 'hem'
+    containers: '123'
+    imagePullSecrets: '123'
+    rolloutStatusTimeout: '1'
