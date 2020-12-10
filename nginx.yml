@@ -7,11 +7,3 @@
         chartName: 'stable/nginx-ingress'
         releaseName: 'nginx'
         overrideValues: 'controller.service.loadBalancerIP=$(test-ip),controller.publishService.enabled=true,controller.metrics.enabled=true'
-- task: KubernetesManifest@0
-  inputs:
-    action: 'deploy'
-    kubernetesServiceConnection: '12-second123-default-1607407912930'
-    namespace: 'hem'
-    containers: '123'
-    imagePullSecrets: '123'
-    rolloutStatusTimeout: '1'
