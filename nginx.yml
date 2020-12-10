@@ -2,7 +2,7 @@
   inputs:
     repository: '123'
     Dockerfile: 'Dockerfile'
-helm install nginx-ingress stable/nginx-ingress \
+     install nginx-ingress stable/nginx-ingress \
 --namespace backend \
 --set controller.replicaCount=2 \
 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
