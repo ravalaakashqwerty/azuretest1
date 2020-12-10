@@ -1,0 +1,42 @@
+trigger:
+- master
+
+stages:  
+  - stage: Deploy_nginx
+
+    jobs:
+    - deployment: Github_nginx_production
+      displayName: Deploy
+      environment: my-env
+      pool:
+        vmImage: 'ubuntu-latest'
+
+      strategy:
+        runOnce:
+          deploy:
+             steps:
+              - checkout: self
+              - task: HelmInstaller@1
+                displayName: Helm installer
+                inputs: 
+                  helmVersionToInstall: 3.1.2
+              - task: HelmDeploy@0
+                displayName: Helm add nginx repo
+                inputs:
+                  namespace: ingress-nginx
+                  command: repo
+                  arguments: add nginx-stable https://helm.nginx.com/stable
+              - task: HelmDeploy@0
+                displayName: Helm repo update
+                inputs:
+                  namespace: ingress-nginx
+                  command: repo
+                  arguments: update
+              - task: HelmDeploy@0
+                displayName: Helm install or upgrade
+                inputs:
+                  namespace: ingress-nginx
+                  command: install
+                  install: true
+                  chartNAme: nginx-stable/nginx-ingress
+                  releaseName: nginx-ingress
