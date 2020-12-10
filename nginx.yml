@@ -1,4 +1,14 @@
 install nginx-ingress stable/nginx-ingress \
+- task: KubernetesManifest@0
+  inputs:
+    action: 'deploy'
+    kubernetesServiceConnection: '12-second123-default-1607407912930'
+    namespace: '1233'
+    strategy: 'canary'
+    percentage: '0'
+    manifests: '1'
+    containers: '123'
+    imagePullSecrets: '1'
 --namespace backend \
 --set controller.replicaCount=2 \
 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
