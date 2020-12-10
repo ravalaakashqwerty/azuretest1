@@ -1,4 +1,7 @@
-
+- task: ContainerBuild@0
+  inputs:
+    repository: '123'
+    Dockerfile: 'Dockerfile'
 helm install nginx-ingress stable/nginx-ingress \
 --namespace backend \
 --set controller.replicaCount=2 \
