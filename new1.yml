@@ -1,15 +1,9 @@
 ---
-- task: HelmDeploy@1
-  displayName: Upgrade/install nginx-ingress
-  inputs:
-    azureSubscriptionEndpoint: 'myServiceConnection'
-    azureResourceGroup: 'myRG'
-    kubernetesCluster: 'myAKS'
-    command: upgrade
-    install: true
-    chartType: Name
-    chartName: nginx-stable/nginx-ingress
-    releaseName: nginx
-    namespace: nginx
-    valueFile: nginx-affinity.yaml
-    arguments: '--set replicaCount="2" --set loadBalancerIP="40.84.136.187" --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal"=\"true\" --set controller.service.annotations."service\.beta\.kubernetes\.io/azure-load-balancer-internal-subnet"="mySubnet"'
+# Use Helm to deploy an NGINX ingress controller
+helm install nginx-ingress stable/nginx-ingress \
+--namespace backend \
+--set controller.replicaCount=2 \
+--set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
+--set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
+--set controller.service.loadBalancerIP="40.84.136.187" \
+--set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="new1 "
