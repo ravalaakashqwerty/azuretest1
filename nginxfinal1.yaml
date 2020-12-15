@@ -16,3 +16,12 @@ inputs:
 versionSpec: $(node_version)
 
 - script: npm install
+ npm install -g @angular/cli
+    npm install
+    ng build --prod
+      displayName: 'npm install and build'
+
+
+
+Build and deploy JavaScript and Node.js apps - Azure Pipelines
+https://docs.microsoft.com
