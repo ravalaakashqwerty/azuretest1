@@ -13,8 +13,7 @@ steps:
   - script: npm install && npm i -g @angular/cli
     displayName: 'Install dependencies'
 
-# Use Helm to deploy an NGINX ingress controller
-helm install nginx-ingress stable/nginx-ingress \
+-- helm install nginx-ingress stable/nginx-ingress \
 --namespace backend \
 --set controller.replicaCount=2 \
 --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
