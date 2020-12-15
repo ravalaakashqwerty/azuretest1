@@ -1,0 +1,36 @@
+- task: HelmDeploy@0
+      inputs:
+        connectionType: 'None'
+        namespace: 'kube-system'
+        command: 'upgrade'
+        chartType: 'Name'
+        chartName: 'stable/nginx-ingress'
+        releaseName: 'nginx'
+        overrideValues: 'controller.service.loadBalancerIP=$node.gaurangacharya.co
+,controller.publishService.enabled=true,controller.metrics.enabled=true'
+        
+        - task: HelmDeploy@0
+      name: HelmOp
+      displayName: Install Flux CD Helm Operator
+      inputs:
+        connectionType: 'None'
+        namespace: 'kube-system'
+        command: 'upgrade'
+        chartType: 'Name'
+        chartName: 'fluxcd/helm-operator'
+        releaseName: 'helm-operator'
+        overrideValues: 'extraEnvs[0].name=HELM_VERSION,extraEnvs[0].value=v3,image.repository=docker.io/fluxcd/helm-operator-prerelease,image.tag=helm-v3-dev-53b6a21d'
+        arguments: '--namespace fluxcd'
+        
+        
+        apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: influxdb
+  namespace: default
+spec:
+  releaseName: influxdb
+  chart:
+    repository: https://charts.bitnami.com/bitnami
+    name: influxdb
+    version: 0.2.4
