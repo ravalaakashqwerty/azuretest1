@@ -12,6 +12,3 @@ steps:
 
   - script: npm install && npm i -g @angular/cli
     displayName: 'Install dependencies'
-
-  - script: npm run build
-    displayName: 'Compile TypeScript and Build'
