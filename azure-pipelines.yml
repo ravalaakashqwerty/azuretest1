@@ -12,11 +12,11 @@ steps:
 
   - script: npm install && npm i -g @angular/cli
     displayName: 'Install dependencies'
-# Create a namespace for your ingress resources
-kubectl create namespace ingress-basic
 
-# Add the ingress-nginx repository
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+--kubectl create namespace ingress-basic
+
+
+--helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
 # Use Helm to deploy an NGINX ingress controller
 helm install nginx-ingress ingress-nginx/ingress-nginx \
