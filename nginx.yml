@@ -1,0 +1,12 @@
+ git clone https://github.com/nginxinc/kubernetes-ingress/
+ cd kubernetes-ingress/deployments/helm-chart
+ git checkout v1.9.1
+ helm repo add nginx-stable https://helm.nginx.com/stable
+ helm repo update
+ helm install my-release nginx-stable/nginx-ingress
+ helm install --name my-release nginx-stable/nginx-ingress
+ helm install my-release .
+ kubectl apply -f crds/
+ --validate=false
+ kubectl apply
+ helm upgrade my-release .
