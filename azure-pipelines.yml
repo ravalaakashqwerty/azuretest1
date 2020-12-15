@@ -12,3 +12,13 @@ steps:
 
   - script: npm install && npm i -g @angular/cli
     displayName: 'Install dependencies'
+
+- task: HelmDeploy@0
+      inputs:
+        connectionType: 'None'
+        namespace: 'kube-system'
+        command: 'upgrade'
+        chartType: 'Name'
+        chartName: 'stable/nginx-ingress'
+        releaseName: 'nginx'
+        overrideValues: 'controller.service.loadBalancerIP=$(node.gaurangacharya.co),controller.publishService.enabled=true,controller.metrics.enabled=true'
