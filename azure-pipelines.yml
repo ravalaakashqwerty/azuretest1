@@ -14,9 +14,9 @@ steps:
     displayName: 'Install dependencies'
 
 -- helm install nginx-ingress stable/nginx-ingress \
---namespace backend \
---set controller.replicaCount=2 \
---set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
---set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
---set controller.service.loadBalancerIP="13.68.154.22" \
---set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="kubernetes-af970373b3bf34c8ea8388901f049c39"
+-- namespace backend \
+-- set controller.replicaCount=2 \
+-- set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
+-- set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
+-- set controller.service.loadBalancerIP="13.68.154.22" \
+-- set controller.service.annotations."service\.beta\.kubernetes\.io/azure-dns-label-name"="kubernetes-af970373b3bf34c8ea8388901f049c39"
