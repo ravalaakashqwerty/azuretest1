@@ -1,32 +1,35 @@
-trigger:
-- master
-
-pool:
-vmImage: 'ubuntu-latest'
-
-steps:
-- task: NodeTool@0
-inputs:
-versionSpec: '10.x'
-displayName: 'Install Node.js'
-
-- script: |
-npm install -g @angular/cli
-npm install
-ng build --prod
-displayName: 'npm install and build'
-workingDirectory: '$(Build.SourcesDirectory)'
-
-- task: ArchiveFiles@2
-inputs:
-rootFolderOrFile: '$(Build.SourcesDirectory)/dist'
-includeRootFolder: true
-archiveType: 'zip'
-archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-replaceExistingArchive: true
-
-- task: PublishBuildArtifacts@1
-inputs:
-PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-ArtifactName: 'drop'
-publishLocation: 'Container'
+- task: HelmDeploy@0
+      inputs:
+        connectionType: 'None'
+        namespace: 'kube-system'
+        command: 'upgrade'
+        chartType: 'Name'
+        chartName: 'stable/nginx-ingress'
+        releaseName: 'nginx'
+        overrideValues: 'controller.service.loadBalancerIP=$(test-ip),controller.publishService.enabled=true,controller.metrics.enabled=true'
+        
+        
+        - task: HelmDeploy@0
+      name: HelmOp
+      displayName: Install Flux CD Helm Operator
+      inputs:
+        connectionType: 'None'
+        namespace: 'kube-system'
+        command: 'upgrade'
+        chartType: 'Name'
+        chartName: 'fluxcd/helm-operator'
+        releaseName: 'helm-operator'
+        overrideValues: 'extraEnvs[0].name=HELM_VERSION,extraEnvs[0].value=v3,image.repository=docker.io/fluxcd/helm-operator-prerelease,image.tag=helm-v3-dev-53b6a21d'
+        arguments: '--namespace fluxcd'
+        
+        apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: influxdb
+  namespace: default
+spec:
+  releaseName: influxdb
+  chart:
+    repository: https://charts.bitnami.com/bitnami
+    name: influxdb
+    version: 0.2.4
