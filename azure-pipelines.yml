@@ -1,42 +1,32 @@
 trigger:
 - master
 
-stages:  
-  - stage: Deploy_nginx
+pool:
+vmImage: 'ubuntu-latest'
 
-    jobs:
-    - deployment: Github_nginx_production
-      displayName: Deploy
-      environment: my-env
-      pool:
-        vmImage: 'ubuntu-latest'
+steps:
+- task: NodeTool@0
+inputs:
+versionSpec: '10.x'
+displayName: 'Install Node.js'
 
-      strategy:
-        runOnce:
-          deploy:
-             steps:
-              - checkout: self
-              - task: HelmInstaller@1
-                displayName: Helm installer
-                inputs: 
-                  helmVersionToInstall: 3.1.2
-              - task: HelmDeploy@0
-                displayName: Helm add nginx repo
-                inputs:
-                  namespace: ingress-nginx
-                  command: repo
-                  arguments: add nginx-stable https://helm.nginx.com/stable
-              - task: HelmDeploy@0
-                displayName: Helm repo update
-                inputs:
-                  namespace: ingress-nginx
-                  command: repo
-                  arguments: update
-              - task: HelmDeploy@0
-                displayName: Helm install or upgrade
-                inputs:
-                  namespace: ingress-nginx
-                  command: install
-                  install: true
-                  chartNAme: nginx-stable/nginx-ingress
-                  releaseName: nginx-ingress
+- script: |
+npm install -g @angular/cli
+npm install
+ng build --prod
+displayName: 'npm install and build'
+workingDirectory: '$(Build.SourcesDirectory)'
+
+- task: ArchiveFiles@2
+inputs:
+rootFolderOrFile: '$(Build.SourcesDirectory)/dist'
+includeRootFolder: true
+archiveType: 'zip'
+archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+inputs:
+PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+ArtifactName: 'drop'
+publishLocation: 'Container'
