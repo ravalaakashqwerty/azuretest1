@@ -23,13 +23,3 @@
         arguments: '--namespace fluxcd'
         
         apiVersion: helm.fluxcd.io/v1
-kind: HelmRelease
-metadata:
-  name: influxdb
-  namespace: default
-spec:
-  releaseName: influxdb
-  chart:
-    repository: https://charts.bitnami.com/bitnami
-    name: influxdb
-    version: 0.2.4
