@@ -2,16 +2,17 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+vmImage: 'ubuntu-latest'
+strategy:
+matrix:
+node_12_x:
+node_version: 12.x
+node_13_x:
+node_version: 13.x
 
 steps:
-- task: NodeTool@1
-  inputs:
-    versionSpec: '12.x'
-  displayName: 'Install Node.js'
+- task: NodeTool@0
+inputs:
+versionSpec: $(node_version)
 
-- script: |
-    npm install -g @angular/cli
-    npm install
-    ng build --prod
-  displayName: 'npm install and build'
+- script: npm install
