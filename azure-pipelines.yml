@@ -12,7 +12,6 @@ steps:
 
   - script: npm install && npm i -g @angular/cli
     displayName: 'Install dependencies'
-
 # Create a namespace for your ingress resources
 kubectl create namespace ingress-basic
 
