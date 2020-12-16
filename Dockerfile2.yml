@@ -1,4 +1,9 @@
 FROM nginx:1.13.11-alpine
+- task: Docker@2
+  inputs:
+    repository: '1234'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
 
 RUN apk add --no-cache openssl
 
