@@ -33,3 +33,16 @@ COPY . /app
 
 # start app
 CMD ng serve --host 0.0.0.0
+
+# add app
+COPY /nginx_file/node.gaurangacharya.co.conf /etc/nginx/sites_available/
+COPY /nginx_file/angular.gaurangacharya.co.conf /etc/nginx/sites_enable/
+COPY /nginx_file/node.gaurangacharya.co.conf /etc/nginx/sites_available/
+COPY /nginx_file/angular.gaurangacharya.co.conf /etc/nginx/sites_enable/
+
+# restart  nginx 
+CMD sudo service nginx restart
+
+# EXPOSE PORT
+ EXPOSE 80
+ EXPOSE 443
