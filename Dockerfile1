@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -yq google-chrome-stable
 
 # set working directory
 WORKDIR /app
+COPY ./package.json /app/
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
@@ -39,6 +40,9 @@ COPY /nginx_file/node.gaurangacharya.co.conf /etc/nginx/sites_available/
 COPY /nginx_file/angular.gaurangacharya.co.conf /etc/nginx/sites_enable/
 COPY /nginx_file/node.gaurangacharya.co.conf /etc/nginx/sites_available/
 COPY /nginx_file/angular.gaurangacharya.co.conf /etc/nginx/sites_enable/
+
+# Serve the app
+CMD ["npm", "run", "server"]
 
 # restart  nginx 
 CMD sudo service nginx restart
