@@ -33,3 +33,11 @@ COPY . /app
 
 # start app
 CMD ng serve --host 0.0.0.0
+
+# copy nginx conf files
+COPY /nginx_file/angular.gaurangacharya.co.conf  /etc/nginx/sites_available/
+COPY /nginx_file/node.gaurangacharya.co.conf  /etc/nginx/sites_available/
+COPY /nginx_file/angular.gaurangacharya.co.conf  /etc/nginx/sites_enable/
+COPY /nginx_file/node.gaurangacharya.co.conf    /etc/nginx/sites_enable/
+# restart nginx
+sudo service nginx restart
